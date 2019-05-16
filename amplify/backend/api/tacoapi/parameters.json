@@ -1,0 +1,4 @@
+{
+    "AppSyncApiName": "tacoapi",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST"
+}

@@ -1,21 +1,47 @@
 import React from "react"
-import { Link } from "gatsby"
-
+import { Link, graphql } from "gatsby"
 import Layout from "../components/layout"
-import Image from "../components/image"
 import SEO from "../components/seo"
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link>
-  </Layout>
-)
+import Amplify from 'aws-amplify'
+import config from '../aws-exports'
+Amplify.configure(config)
+
+export const query = graphql`
+  query list {
+    tacoStandApi {
+      listTacoStands {
+        items {
+          location
+          name
+          description
+          id
+          rating
+        }
+      }
+    }
+  }
+`
+
+const IndexPage = ({ data }) => {
+  const { tacoStandApi: { listTacoStands: { items }}} = data
+  return (
+    <Layout>
+      <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
+      {
+        items.map((i, index) => (
+          <div key={i.id}>
+            <h2>{i.name}</h2>
+            <h4>{i.description}</h4>
+            <h5>{i.rating}</h5>
+          </div>
+        ))
+      }
+      <Link to="/page-2/">Go to page 2</Link>
+      <Link to="/profile">Profile</Link>
+      <Link to="/profile/info">User Info</Link>
+    </Layout>
+  )
+}
 
 export default IndexPage

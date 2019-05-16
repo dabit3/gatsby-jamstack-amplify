@@ -7,6 +7,17 @@ module.exports = {
   plugins: [
     `gatsby-plugin-react-helmet`,
     {
+      resolve: 'gatsby-source-graphql',
+      options: {
+        typeName: "TacoStandApi",
+        fieldName: "tacoStandApi",
+        url: "https://g7367hbzazei7i34qkuamitlni.appsync-api.eu-central-1.amazonaws.com/graphql",
+        headers: {
+          'x-api-key': 'da2-letitu6hercuvglstses5ozssi'
+        }
+      }
+    },
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         name: `images`,

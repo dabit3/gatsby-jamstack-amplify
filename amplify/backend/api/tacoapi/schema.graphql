@@ -1,0 +1,7 @@
+type TacoStand @model {
+  id: ID!
+  name: String!
+  description: String
+  location: String
+  rating: Int
+}
